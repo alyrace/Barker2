@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "watch": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
@@ -12,8 +13,20 @@
   "license": "ISC",
   "dependencies": {
     "async": "^3.2.1",
+    "aws-sdk": "^2.985.0",
+    "bcrpyt": "^2.0.0",
+    "config": "^3.3.6",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "mongoose": "^6.0.5"
+    "express-fileupload": "^1.2.1",
+    "file-type": "^16.5.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.0.5",
+    "morgan": "^1.10.0",
+    "multiparty": "^4.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   }
 }
