@@ -6,7 +6,7 @@ const errorHandler = require('../middleware/error');
 //create boards
 // @route       POST /api/board/create
 // @access      Private
-exports.createBoardController = asyncHandler(async(req, res, next) =>{
+exports.createBoardController = asyncHandler(async (req, res, next) =>{
     const user = req.user;
     const {name, avatar} = req.body;
     if(!name) {
@@ -49,7 +49,7 @@ exports.getAllBoardsForUserController = asyncHandler(async (req, res, next) =>{
 //@desc get single board fro member or owner
 // @route       GET /api/board/
 // @access      Private
-exports.getBoardForUserController =  asyncHandler(async(req, res, next) => {
+exports.getBoardForUserController =  asyncHandler(async (req, res, next) => {
     const user = req.user;
     const board = await Board.findById(req.params.id)
         .populate({
@@ -75,7 +75,7 @@ exports.getBoardForUserController =  asyncHandler(async(req, res, next) => {
 //@desc update single board
 // @route       PUT /api/board/:id
 // @access      Private
-const updateBoardController = asyncHandler(async(req, res, next) => {
+exports.updateBoardController = asyncHandler(async (req, res, next) => {
     const user = req.user;
     
     let board = await Board.findById(req.params.id);
@@ -99,7 +99,7 @@ const updateBoardController = asyncHandler(async(req, res, next) => {
 //@desc delete single board
 // @route       DELETE /api/board/:id
 // @access      Private
-exports.deleteBoardController = asyncHandler(async(req, res, next) => {
+exports.deleteBoardController = asyncHandler(async (req, res, next) => {
     const user = req.user;
     
     let board = await Board.findById(req.params.id)

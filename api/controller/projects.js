@@ -6,7 +6,7 @@ const errorHandler = require('../middleware/error');
 //create project
 // @route       POST /api/project/create
 // @access      Private
-exports.createProjectController = asyncHandler(async(req, res, next) => {
+exports.createProjectController = asyncHandler(async (req, res, next) => {
     const project = await Project.create({
     ...req.body,
     createdBy: req.user._id,
@@ -21,7 +21,7 @@ exports.createProjectController = asyncHandler(async(req, res, next) => {
 //get all projects
 // @route       GET /api/project/:id
 // @access      Private
-exports.getAllProjectsController = asyncHandler(async(req, res, next) =>{
+exports.getAllProjectsController = asyncHandler(async (req, res, next) =>{
     console.log(req.params);
     const project = await Project.find({ boardId: req.params.id }).populate({
         path: "cards",
@@ -41,7 +41,7 @@ exports.getAllProjectsController = asyncHandler(async(req, res, next) =>{
 //update single project
 // @route       PUT /api/project/:id
 // @access      Private
-exports.updateProjectController = asyncHandler(async(req, res, next) => {
+exports.updateProjectController = asyncHandler(async (req, res, next) => {
     const project = await Project.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
     runValidators: true,
@@ -56,7 +56,7 @@ exports.updateProjectController = asyncHandler(async(req, res, next) => {
 // @route       DELETE /api/project/:id
 // @access      Private
 
-exports.deleteProjectController = asyncHandler(async(req, res, next) =>{
+exports.deleteProjectController = asyncHandler(async (req, res, next) =>{
     await Card.deleteMany({ listId: req.params.id });
 
     await Project.deleteOne({ _id: req.params.id });

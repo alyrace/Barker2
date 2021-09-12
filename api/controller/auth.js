@@ -1,59 +1,37 @@
 const User = require('../models/user');
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
-const {validationResult} = require('express-validator');
-const gravatar = require('gravatar');
+//const {validationResult} = require('express-validator');
+//const gravatar = require('gravatar');
 
 //GET REGISTER USER
 
 // @desc        Register user
 // @route       POST /api/users/register
 // @access      Public
+exports.registerController = asyncHandler(async (req, res, next) => {
+  const { name, email, password } = req.body;
 
-exports.registerController = asyncHandler(async (req, res, next) =>{
-    const errors = validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()})
-    }
-    const {name, email, password} = req.body;
-    try{
-        // see if user exists
-        let user = await User.findOne({email});
-        if(user) {
-            return next(new ErrorResponse("User already exists", 400));
-        }
-        //get user gravatar
-        const avatar = gravatar.url(email, {
-            s: '200',
-            r: 'pq',
-            d: 'mm'
-        })
-        user = new User({
-            name,
-            email,
-            avatar,
-            password
-        })
+  if (!email || !password || !name) {
+    return next(
+      new ErrorResponse(`Please provide an email, name and password`, 400)
+    );
+  }
 
-        await user.save();
-        //res.send('User Registered')
+  const userCheck = await User.findOne({ email });
 
-    } catch(err) {
-        console.log(err);
-        next(new ErrorResponse("Server Error", 500));
-    }
-});
-//get token from model, create token and send response
-const sendTokenResponse = (user, statusCode, res) => {
-  //create token
-  const token = user.getSignedJwtToken();
-
-  res.status(statusCode).json({
-    success: true,
-    token,
+  if (userCheck) {
+    return next(new ErrorResponse(`Email already taken!`, 400));
+  }
+  //create user
+  const user = await User.create({
+    name,
+    email,
+    password,
   });
-};
 
+  sendTokenResponse(user, 200, res);
+});
 
 //Login
 exports.loginController = asyncHandler(async (req, res, next) => {

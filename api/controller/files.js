@@ -9,7 +9,7 @@ const uploadFile = require("../utils/uploadfiles");
 // @desc        Upload File to s3
 // @route       POST /api/files/upload
 // @access      Private
-exports.fileUploadController = asyncHandler(async(req, res, next) => {
+exports.fileUploadController = asyncHandler(async (req, res, next) => {
     const form = new multiparty.Form();
 
   form.parse(

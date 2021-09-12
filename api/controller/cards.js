@@ -6,7 +6,7 @@ const errorHandler = require('../middleware/error');
 //create card
 // @route       POST /api/card/create
 // @access      Private
-exports.createCardController = asyncHandler(async(req, res, next) =>{
+exports.createCardController = asyncHandler(async (req, res, next) =>{
     const card = await Card.create({
     ...req.body,
     createdBy: req.user._id,
@@ -30,7 +30,7 @@ exports.createCardController = asyncHandler(async(req, res, next) =>{
 //get card
 // @route       GET /api/card/:id
 // @access      Private
-exports.getCardController = asyncHandler(async(req, res, next) => {
+exports.getCardController = asyncHandler(async (req, res, next) => {
     const card = await Card.findById(req.params.id)
     .populate({
       path: "projectId",
@@ -58,7 +58,7 @@ exports.getCardController = asyncHandler(async(req, res, next) => {
 //reorder card
 // @route       PUT /api/card/reorder
 // @access      Private
-exports.reorderCardController = asyncHandler(async(req, res, next) => {
+exports.reorderCardController = asyncHandler(async (req, res, next) => {
     const { cards, projects } = req.body;
     var iterator = 0;
   function updateCards() {
@@ -121,7 +121,7 @@ exports.reorderCardController = asyncHandler(async(req, res, next) => {
 //update card
 // @route       PUT /api/card/:id
 // @access      Private
-exports.updateCardController = asyncHandler(async(req, res, next) => {
+exports.updateCardController = asyncHandler(async (req, res, next) => {
     const card = await Card.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true,
     runValidators: true,
@@ -151,7 +151,7 @@ exports.updateCardController = asyncHandler(async(req, res, next) => {
 //delete card
 // @route       DELETE /api/card/:id
 // @access      Private
-exports.deleteCardController = asyncHandler(async(req, res, next) =>{
+exports.deleteCardController = asyncHandler(async (req, res, next) =>{
     const card = await Card.findByIdAndDelete(req.params.id);
 
   const project = await Project.findById(card.listId);
